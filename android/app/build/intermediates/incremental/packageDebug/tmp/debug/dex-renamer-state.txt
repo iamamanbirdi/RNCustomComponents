@@ -1,0 +1,4 @@
+#Tue Nov 13 01:26:46 IST 2018
+base.0=/Users/AmanBirdi/D DRIVE/ReactNative/My Projects/custom components/CustComp/android/app/build/intermediates/transforms/dexMerger/debug/0
+path.0=classes.dex
+renamed.0=classes.dex
