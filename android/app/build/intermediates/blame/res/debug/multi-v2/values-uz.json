@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/AmanBirdi/D DRIVE/ReactNative/My Projects/custom components/CustComp/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-uz/values-uz.xml",
+            "outputFile": "/Users/AmanBirdi/D DRIVE/ReactNative/My Projects/Cust Comp/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-uz/values-uz.xml",
             "map": [
                 {
                     "source": "/Users/AmanBirdi/.gradle/caches/transforms-1/files-1.1/support-compat-27.1.1.aar/f950bffb2a182eb3f76e332ac8d1f610/res/values-uz/values-uz.xml",

@@ -28,7 +28,7 @@ export default class MainComponent extends Component {
   }
   
    addTillSingleDigit = (num)=>{
-
+    console.log("num = "+num);
     num = num.toString();
     
     while(num.length > 1){
@@ -40,6 +40,7 @@ export default class MainComponent extends Component {
     }
     return num;
   }
+  
   onPressGoBtn = ()=>{
       
       if(this.state.name == ""){
@@ -58,7 +59,7 @@ export default class MainComponent extends Component {
         }
         
         //nameSum = Math.abs(nameSum % 9); // value 1
-        nameSum = addTillSingleDigit(nameSum);
+        nameSum = this.addTillSingleDigit(nameSum);
 
         var dob = this.state.dob;
         var dobArr = dob.split("-");
@@ -68,7 +69,7 @@ export default class MainComponent extends Component {
        
 
         //var birthSum = Math.abs(dd % 9); // value 2
-        var birthSum = addTillSingleDigit(birthSum);
+        var birthSum = this.addTillSingleDigit(dd);
 
         var dobDigits = dob.replace(/-/g,'');
         Alert.alert("DOB: "+dd+" :"+mm+" :"+yy+" :"+dobDigits+" :"+nameValArr);
@@ -78,7 +79,7 @@ export default class MainComponent extends Component {
         }
         Alert.alert("DOB: "+dd+" :"+mm+" :"+yy+" :"+dobDigits+" :"+dobSum);
         //var destinySum = Math.abs(dobSum % 9); // value 4
-        var destinySum = addTillSingleDigit(destinySum);
+        var destinySum = this.addTillSingleDigit(dobSum);
 
         var newData = [{
           "nameNum": nameSum,
@@ -96,6 +97,7 @@ export default class MainComponent extends Component {
       }
   }
   render() {  
+    
     return (
       <View style={[styles.container, styles.tomato]}>
         <ImageBackground
@@ -170,7 +172,21 @@ export default class MainComponent extends Component {
                   containerStyle={styles.goBtn2}
                   style={{color:'#fff'}}
                   onPress={() => {
-                  this.props.navigation.navigate(FirstScreen);
+                    if(this.state.name == ""){
+                      Alert.alert("Please enter your name");
+                    }else if(this.state.dob == ""){
+                      Alert.alert("Please enter your DOB");
+                    }else{
+                      var dob = this.state.dob;
+                      var dobArr = dob.split("-");
+                      var dd = dobArr[0];
+                      var yy = dobArr[2];
+                      var dataToSend = {
+                        dd:dd,
+                        yy:yy
+                      }
+                      this.props.navigation.navigate(FirstScreen,dataToSend);
+                    }
                   }}
                   >
                   Maha Dasha

@@ -24,13 +24,13 @@ const App = createStackNavigator({
     FirstScreen: {
         screen : FirstComponent,
         navigationOptions: {
-            headerTitle : 'First Screen'
+            headerTitle : 'Maha Dasha'
         }
     },
     SecondScreen: {
         screen : SecondComponent,
         navigationOptions: {
-            headerTitle : 'Second Screen'
+            headerTitle : 'Varsh Fal'
         }
     }
 });
