@@ -8,6 +8,7 @@
     "android": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res && react-native run-android"
   },
   "dependencies": {
+    "moment": "^2.22.2",
     "react": "16.6.0-alpha.8af6728",
     "react-native": "0.57.4",
     "react-native-button": "^2.3.0",

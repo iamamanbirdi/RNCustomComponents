@@ -15,7 +15,7 @@ export default class MainComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      dob: "",
+      dob: "11-03-1994",
       name:"",
       flatListData : [{
         "nameNum": "",
@@ -72,12 +72,12 @@ export default class MainComponent extends Component {
         var birthSum = this.addTillSingleDigit(dd);
 
         var dobDigits = dob.replace(/-/g,'');
-        Alert.alert("DOB: "+dd+" :"+mm+" :"+yy+" :"+dobDigits+" :"+nameValArr);
+        //Alert.alert("DOB: "+dd+" :"+mm+" :"+yy+" :"+dobDigits+" :"+nameValArr);
         var dobSum=0;
         for(var i=0;i<dobDigits.length;i++){
           dobSum += parseInt(dobDigits[i]);
         }
-        Alert.alert("DOB: "+dd+" :"+mm+" :"+yy+" :"+dobDigits+" :"+dobSum);
+        //Alert.alert("DOB: "+dd+" :"+mm+" :"+yy+" :"+dobDigits+" :"+dobSum);
         //var destinySum = Math.abs(dobSum % 9); // value 4
         var destinySum = this.addTillSingleDigit(dobSum);
 
@@ -180,9 +180,11 @@ export default class MainComponent extends Component {
                       var dob = this.state.dob;
                       var dobArr = dob.split("-");
                       var dd = dobArr[0];
+                      var mm = dobArr[1];
                       var yy = dobArr[2];
                       var dataToSend = {
                         dd:dd,
+                        mm:mm,
                         yy:yy
                       }
                       this.props.navigation.navigate(FirstScreen,dataToSend);
