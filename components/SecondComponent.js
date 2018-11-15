@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
 import {styles} from './style';
 
-import {Text,TextInput,View,Keyboard,Alert,Image,ImageBackground} from 'react-native';
-import Button from 'react-native-button';
+import {Text,TextInput,View,Keyboard,Alert,Image,ImageBackground,FlatList} from "react-native";
+import DatePicker from "react-native-datepicker";
+import { Col, Row, Grid } from "react-native-easy-grid";
+import Button from "react-native-button";
 
 
 export default class SecondComponent extends Component {

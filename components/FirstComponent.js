@@ -43,7 +43,7 @@ export default class FirstComponent extends Component {
 
           var newData2 = [{
             "dasha": "M.D.",
-            "year": "Year wise Dasha Year wise Dasha"
+            "year": "Year wise Dasha"
           }];
 
         while (yy<futureYY){
@@ -85,32 +85,17 @@ componentDidMount(){
 
         return(
             <View style={[styles.container,{flexDirection:'row'}]}>
-                <ScrollView style={{width:wid*0.40}}>
+                <ScrollView horizontal={true} >
                     <FlatList 
                         data={this.state.dashaListData}
                         renderItem={({item, index})=>{
                             //console.log(`Item = ${JSON.stringify(item)}, index = ${index}`);
                             return (
-                            <FlatListItem item={item} index={index}>
+                            <FlatListItem parentStateData={this.state} item={item} index={index}>
 
                             </FlatListItem>);
                         }}
                         >
-
-                    </FlatList>
-                </ScrollView>
-                <ScrollView horizontal={true} style={{width:wid*0.60,backgroundColor:'red'}}>
-                    <FlatList 
-                        data={this.state.yearlyDashaListData}
-                        renderItem={({item, index})=>{
-                            //console.log(`Item = ${JSON.stringify(item)}, index = ${index}`);
-                            return (
-                            <FlatListItemTwo parentStateData={this.state} item={item} index={index}>
-
-                            </FlatListItemTwo>);
-                        }}
-                        >
-
                     </FlatList>
                 </ScrollView>
             </View>
@@ -121,18 +106,6 @@ componentDidMount(){
 
 
 class FlatListItem extends Component {
-    render() {          
-        return (
-                
-              <View style={[{flexDirection:'row',backgroundColor: this.props.index % 2 == 0 ? '#76a1fc': '#4b82f4'  }]}>   
-                  <Text style={{width:45,color: 'white', padding: 6, fontSize: 14, borderColor: 'gray', borderWidth:1,}}>{this.props.item.dasha}</Text>
-                  <Text style={{width:135,color: 'white', padding: 6, fontSize: 14, borderColor: 'gray', borderWidth:1,}}>{this.props.item.year}</Text>
-               </View>
-         
-        );
-    }
-}
-class FlatListItemTwo extends Component {
     addTillSingleDigit = (num)=>{
         console.log("num = "+num);
         num = num.toString();
@@ -146,41 +119,48 @@ class FlatListItemTwo extends Component {
         }
         return num;
     }
-render() {  
-            const dayMap = {'sunday':1,'monday':2,'tuesday':9,'wednesday':5,'thursday':3,'friday':6,'saturday':8,}
-            const yrs=this.props.item.year;
-            const yrsArr = yrs.split("-");
-            var yearlyDashaVal = '';
-            if(this.props.index == 0){
-                yearlyDashaVal = 'Year Wise Dasha';
-            }else{
-                for(var i=yrsArr[0]; i<yrsArr[1]; i++){
-                    
-                    
-                    var monthVal = this.props.parentStateData.mm;
-                    var dateVal = this.props.parentStateData.dd;
-                    var yearVal = i.toString().substring(2, 4); // 1
+    render() {    
+        const dayMap = {'sunday':1,'monday':2,'tuesday':9,'wednesday':5,'thursday':3,'friday':6,'saturday':8,}
+        const yrs=this.props.item.year;
+        const yrsArr = yrs.split("-");
+        var yearlyDashaVal = '';
+        if(this.props.index == 0){
+            yearlyDashaVal = 'Varsh Fal';
+        }else{
+            for(var i=yrsArr[0]; i<yrsArr[1]; i++){
+                
+                
+                var monthVal = this.props.parentStateData.mm;
+                var dateVal = this.props.parentStateData.dd;
+                var yearVal = i.toString().substring(2, 4); // 1
 
-                    var datMonSum = this.addTillSingleDigit(parseInt(dateVal)+parseInt(monthVal)); // 2
-                    var dob = yearVal + " - " +  monthVal + " - " +  dateVal ;
-                    var dt = Moment(dob, "YYYY-MM-DD");
-                    var dayName = dt.format('dddd').toLowerCase();
-                   
-                    var dayValue = dayMap[dayName]; // 3
-                    //Alert.alert(dayName+" "+dayValue);
-                    var sum = parseInt(yearVal)+parseInt(datMonSum)+parseInt(dayValue)
-                    var yrDasha = this.addTillSingleDigit(sum);
+                var datMonSum = this.addTillSingleDigit(parseInt(dateVal)+parseInt(monthVal)); // 2
+                var dob = yearVal + " - " +  monthVal + " - " +  dateVal ;
+                var dt = Moment(dob, "YYYY-MM-DD");
+                var dayName = dt.format('dddd').toLowerCase();
+               
+                var dayValue = dayMap[dayName]; // 3
+                //Alert.alert(dayName+" "+dayValue);
+                var sum = parseInt(yearVal)+parseInt(datMonSum)+parseInt(dayValue)
+                var yrDasha = this.addTillSingleDigit(sum);
+                if (i == yrsArr[1]-1){
+                    yearlyDashaVal += i+'['+yrDasha+']';
+                }else{
                     yearlyDashaVal += i+'['+yrDasha+']'+' , ';
-                    //yearlyDashaVal += i+' | ';
                 }
-            }     
-    return (
-            
-             <View style={[{flexDirection:'row',backgroundColor: this.props.index % 2 == 0 ? '#76a1fc': '#4b82f4'  }]}>   
-                <Text style={{width:45,color: 'white', padding: 6, fontSize: 14, borderColor: 'gray', borderWidth:1,}}>{this.props.item.dasha}</Text>
-                <Text style={{color: 'white', padding: 6, fontSize: 14, borderColor: 'gray', borderWidth:1,}}>{yearlyDashaVal}</Text>
-            </View>
+                
+                //yearlyDashaVal += i+' | ';
+            }
+        } 
         
-    );
-}
+        return (
+                
+              <View style={[{flexDirection:'row',backgroundColor: this.props.index % 2 == 0 ? '#becff4': '#dee6f7'  }]}>   
+                  <Text style={{width:45,color: '#000', padding: 6, fontSize: 14, borderRightColor: 'gray', borderRightWidth:1}}>{this.props.item.dasha}</Text>
+                  <Text style={{width:100,color: '#000', padding: 6, fontSize: 14, borderRightColor: 'gray', borderRightWidth:1}}>{this.props.item.year}</Text>
+                  <Text style={{color: '#000', padding: 6, fontSize: 14}}>{yearlyDashaVal}</Text>
+               </View>
+         
+        );
+    }
 }

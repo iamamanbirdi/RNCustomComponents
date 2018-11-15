@@ -94,21 +94,29 @@ export default class MainComponent extends Component {
                 }
         });
 
+        Keyboard.dismiss();
       }
   }
+
+  componentDidMount(){
+      /*setTimeout(() => {
+          
+      }, 3000);*/
+  }
+
   render() {  
     
     return (
-      <View style={[styles.container, styles.tomato]}>
+      <View style={[styles.container]}>
         <ImageBackground
-          source={require("./images/background.png")}
+          source={require("./images/space.png")}
           style={styles.backgroundImage}
         >
-          {/*<Text style={styles.welcome}>Welcome Astrologer !</Text>*/}
+          <Text style={styles.welcome}>Welcome Astrologer !</Text>
           
         <TextInput style={[styles.textInput,styles.textBorder,{paddingLeft:30,marginTop:30}]}
             placeholder = 'Enter your Name'
-            placeholderTextColor = '#000'
+            placeholderTextColor = '#fff'
             onChangeText = {
                 (text) => {
                     this.setState(()=>{
@@ -122,7 +130,7 @@ export default class MainComponent extends Component {
         
           <View style={[styles.textInput,{marginTop:20,flexDirection:'row'}]}>
             <DatePicker
-              style={[{ width: 200 }]}
+              style={[{ width: 200,backgroundColor:"#fff" }]}
               date={this.state.dob}
               mode="date"
               placeholder="Date of birth"
@@ -135,7 +143,8 @@ export default class MainComponent extends Component {
                 },
                 dateInput: {
                   marginLeft: 0,
-                  placeholderTextColor : "red"
+                  placeholderTextColor : "#fff",
+                  backgroundColor:'#fff'
                 }
               }}
               onDateChange={date => {
@@ -144,7 +153,7 @@ export default class MainComponent extends Component {
             />
             <Button
               containerStyle={styles.goBtn}
-              style={{color:'#fff'}}
+              style={{color:'#000'}}
               onPress={this.onPressGoBtn}
             >
               Go 
@@ -170,7 +179,7 @@ export default class MainComponent extends Component {
           <View style={[styles.gridContainer,{flexDirection:'row',flex:0.15,marginTop:70}]}>
                 <Button
                   containerStyle={styles.goBtn2}
-                  style={{color:'#fff'}}
+                  style={{color:'#000'}}
                   onPress={() => {
                     if(this.state.name == ""){
                       Alert.alert("Please enter your name");
@@ -195,12 +204,12 @@ export default class MainComponent extends Component {
                 </Button>
                 <Button
                   containerStyle={[styles.goBtn2,{marginLeft:10}]}
-                  style={{color:'#fff'}}
+                  style={{color:'#000'}}
                   onPress={() => {
-                  this.props.navigation.navigate(SecondScreen); 
+                  this.props.navigation.navigate(SecondScreen,dataToSend); 
                   }}
                   >
-                  Varsh Fal
+                  See Charts
                 </Button>
           </View>
         </ImageBackground>

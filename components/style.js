@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
       height:40,
       marginLeft:40,
       marginRight:40,
-      color: '#000',
+      color: '#fff',
     },
     textBorder:{
       borderColor: 'gray',
@@ -43,21 +43,21 @@ const styles = StyleSheet.create({
         resizeMode: 'cover'
     },
     goBtn:{
-      backgroundColor:'green',
+      backgroundColor:'#fff',
       marginLeft:10,
       borderRadius:10,
       width:70,
       padding:5
     },
     goBtn2:{
-      backgroundColor:'green',
+      backgroundColor:'#fff',
       borderRadius:5,
       width:130,
       padding:5
     },
     flatListItem: {
       flex:0.5,
-      color: 'white',
+      color: '#000',
       padding: 6,
       fontSize: 14,  
       borderColor: 'gray',
@@ -66,12 +66,12 @@ const styles = StyleSheet.create({
   oddRow:{
     flex: 1,
     flexDirection:'row'   , 
-    backgroundColor: 'mediumseagreen'  
+    backgroundColor: '#becff4'  
   },
   evenRow:{
     flex: 1,
     flexDirection:'row'    ,
-    backgroundColor: 'tomato'
+    backgroundColor: '#dee6f7'
   }
 
   });

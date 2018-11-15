@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/AmanBirdi/D DRIVE/ReactNative/My Projects/Cust Comp/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-v25/values-v25.xml",
+            "outputFile": "D:\\AmanBirdi\\ReactNative\\CustomComponents\\android\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-v25\\values-v25.xml",
             "map": [
                 {
-                    "source": "/Users/AmanBirdi/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/142f7f35802d5ad9026d0a523983160f/res/values-v25/values-v25.xml",
+                    "source": "C:\\Users\\aman.g\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-27.1.1.aar\\d3490d9af1990c14956e348aec4104ab\\res\\values-v25\\values-v25.xml",
                     "from": {
                         "startLines": "2,3,4,6",
                         "startColumns": "4,4,4,4",
