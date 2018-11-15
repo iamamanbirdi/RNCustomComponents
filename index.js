@@ -37,7 +37,7 @@ const App = createStackNavigator({
     SecondScreen: {
         screen : SecondComponent,
         navigationOptions: {
-            headerTitle : 'Varsh Fal'
+            headerTitle : 'Charts'
         }
     }
 });

@@ -206,7 +206,23 @@ export default class MainComponent extends Component {
                   containerStyle={[styles.goBtn2,{marginLeft:10}]}
                   style={{color:'#000'}}
                   onPress={() => {
-                  this.props.navigation.navigate(SecondScreen,dataToSend); 
+                    if(this.state.name == ""){
+                      Alert.alert("Please enter your name");
+                    }else if(this.state.dob == ""){
+                      Alert.alert("Please enter your DOB");
+                    }else{
+                      var dob = this.state.dob;
+                      var dobArr = dob.split("-");
+                      var dd = dobArr[0];
+                      var mm = dobArr[1];
+                      var yy = dobArr[2];
+                      var dataToSend = {
+                        dd:dd,
+                        mm:mm,
+                        yy:yy
+                      }
+                      this.props.navigation.navigate(SecondScreen,dataToSend);
+                    }
                   }}
                   >
                   See Charts
