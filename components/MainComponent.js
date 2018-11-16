@@ -15,7 +15,7 @@ export default class MainComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      dob: "11-03-1994",
+      dob: "",
       name:"",
       flatListData : [{
         "nameNum": "",
@@ -193,7 +193,7 @@ export default class MainComponent extends Component {
             </Button>
           </View>
           
-          <View style={[styles.gridContainer]}>
+          <View style={[styles.gridContainer,{flex:0.9}]}>
 
             <FlatList 
                 data={this.state.flatListData}

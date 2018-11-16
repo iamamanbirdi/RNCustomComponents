@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
         marginLeft:40,
       marginTop:30,
       marginRight:40,
-      flex:0.5,
+      
     },
     backgroundImage: {
         flex: 1,
