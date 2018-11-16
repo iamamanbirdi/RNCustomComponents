@@ -18,8 +18,9 @@ export default class SecondComponent extends Component {
             dob:"",
             currYear:"",
             currYearMahaDasha:"",
-            currYearVF:""
-    }
+            currYearVF:"",
+            destinyNum:""
+      }
     }
     addTillSingleDigit = (num)=>{
         console.log("num = "+num);
@@ -74,7 +75,7 @@ export default class SecondComponent extends Component {
             newData.push(obj);
         }
         
-        var dob = params.dd+""+params.mm+""+params.yy;
+        var dob = params.dd+""+params.mm+""+params.yy.substring(2, 4);
         dob = dob.replace(/0/g,'');
         this.setState(()=>{
                 return{
@@ -84,21 +85,30 @@ export default class SecondComponent extends Component {
                     yy:params.yy,
                     dob:dob,
                     currYear:currYr,
-                    currYearMahaDasha:currYrMahaDasha
+                    currYearMahaDasha:currYrMahaDasha,
+                    destinyNum:params.destinyNum
                 }
         });
 
+        // finding current year dasha(vf)
         var dateVal = parseInt(params.dd);
         var monthVal = parseInt(params.mm);
         var yearVal = currYr;
         var yrVal = parseInt(yearVal.substring(2, 4));
         var datebirth = yearVal + " - " +  monthVal + " - " +  dateVal ;
-        var dt = Moment(datebirth, "YYYY-MM-DD");
+        var personDate = Moment(datebirth,"YYYY-MM-DD");
+        var now = Moment();
+        //Alert.alert(now.format('DD-MM-YYYY') +" : "+ personDate.format('DD-MM-YYYY'));
+        if (now < personDate) {
+           yrVal = yrVal-1; // if his bday has been passed or not in the current year
+        } 
+        var dateob = yrVal + " - " +  monthVal + " - " +  dateVal ;
+        var dt = Moment(dateob, "YYYY-MM-DD");
         var dayName = dt.format('dddd').toLowerCase();
         const dayMap = {'sunday':1,'monday':2,'tuesday':9,'wednesday':5,'thursday':3,'friday':6,'saturday':8,}
         var dayValue = dayMap[dayName];       
         var sum = dateVal+monthVal+yrVal+parseInt(dayValue);
-        var yrDasha = this.addTillSingleDigit(sum); // value 8
+        var yrDasha = this.addTillSingleDigit(sum); // value 
         this.setState(()=>{
                 return{
                     currYearVF:yrDasha
@@ -223,16 +233,19 @@ export default class SecondComponent extends Component {
             </Grid>
           </View>
 
-            <View style={[styles.gridContainer,{marginTop:10,flex:0.2}]}>        
-                    <View style={styles.oddRow}>   
+            <View style={[styles.gridContainer,{marginLeft:20,marginRight:20,marginTop:10,flex:0.2}]}>        
+                    <View style={[styles.oddRow]}>   
                         <Text style={[styles.flatListItem]}>Year</Text>
-                        <Text style={[styles.flatListItem]}>Maha Dasha</Text>
+                        <Text style={[styles.flatListItem,{paddingTop:2}]}>Maha Dasha</Text>
                         <Text style={[styles.flatListItem]}>Varsh Fal</Text>
+                        <Text style={[styles.flatListItem,{paddingTop:2}]}>Destiny Number</Text>
+
                     </View>
                     <View style={styles.evenRow}>   
                         <Text style={[styles.flatListItem]}>{this.state.currYear}</Text>
                         <Text style={[styles.flatListItem]}>{this.state.currYearMahaDasha}</Text>
                         <Text style={[styles.flatListItem]}>{this.state.currYearVF}</Text>
+                        <Text style={[styles.flatListItem]}>{this.state.destinyNum}</Text>
                     </View>
              </View>
             

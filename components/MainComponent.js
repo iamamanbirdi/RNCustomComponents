@@ -15,7 +15,7 @@ export default class MainComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      dob: "",
+      dob: "14-12-1988",
       name:"",
       flatListData : [{
         "nameNum": "",
@@ -103,8 +103,15 @@ export default class MainComponent extends Component {
         var dateVal = parseInt(dobArr[0]);
         var monthVal = parseInt(dobArr[1]);
         var yearVal = parseInt(tDate[2]);
-        var dob = yearVal + " - " +  monthVal + " - " +  dateVal ;
-        var dt = Moment(dob, "YYYY-MM-DD");
+        var dateofb = mDate[2] + " - " +  monthVal + " - " +  dateVal ;
+        var personDate = Moment(dateofb,"YYYY-MM-DD");
+        var now = Moment();
+        if (now < personDate) {
+           yearVal = yearVal-1;// if his bday has been passed or not in the current year
+        } 
+        //Alert.alert(now +" : "+ personDate+" : "+yearVal);
+        var dateob = yearVal + " - " +  monthVal + " - " +  dateVal ;
+        var dt = Moment(dateob, "YYYY-MM-DD");
         var dayName = dt.format('dddd').toLowerCase();
         var dayValue = dayMap[dayName];       
         var sum = dateVal+monthVal+yearVal+parseInt(dayValue);
@@ -239,10 +246,8 @@ export default class MainComponent extends Component {
                   containerStyle={[styles.goBtn2,{marginLeft:15}]}
                   style={{color:'#000'}}
                   onPress={() => {
-                    if(this.state.name == ""){
-                      Alert.alert("Please enter your name");
-                    }else if(this.state.dob == ""){
-                      Alert.alert("Please enter your DOB");
+                    if(this.state.flatListData[0].destinyNum == ""){
+                      Alert.alert("Please press Go Btn first.");
                     }else{
                       var dob = this.state.dob;
                       var dobArr = dob.split("-");
@@ -252,7 +257,8 @@ export default class MainComponent extends Component {
                       var dataToSend = {
                         dd:dd,
                         mm:mm,
-                        yy:yy
+                        yy:yy,
+                        destinyNum:this.state.flatListData[0].destinyNum
                       }
                       this.props.navigation.navigate(SecondScreen,dataToSend);
                     }
