@@ -5,8 +5,8 @@ import {
   Text,TextInput,View,Keyboard,Alert,Image,ImageBackground,FlatList
 } from "react-native";
 import DatePicker from "react-native-datepicker";
-import { Col, Row, Grid } from "react-native-easy-grid";
 import Button from "react-native-button";
+import Moment from 'moment';
 import { FirstScreen, SecondScreen } from "./ScreenNames";
 let alphabetMatrix = {
     'a' :1 , 'b' :2 , 'c' :3 , 'd' :4 , 'e' :5 , 'f' :6 , 'g' :7 , 'h' :8 , 'i' :9 , 'j' :1 , 'k' :2 , 'l' :3 , 'm' :4 , 'n' :5 , 'o' :6 , 'p' :7 , 'q' :8 , 'r' :9 , 's' :1 , 't' :2 , 'u' :3 , 'v' :4 , 'w' :5 , 'x' :6 , 'y' :7 , 'z' :8
@@ -21,10 +21,14 @@ export default class MainComponent extends Component {
         "nameNum": "",
         "birthNum": "",               
         "cardinalNum": "",
-        "destinyNum": ""
-
+        "destinyNum": "",
+        "dayNumber":"",
+        "monthNumber":"",
+        "mahaDasha":"",
+        "thisVarshFal":""
       }]
     };
+    
   }
   
    addTillSingleDigit = (num)=>{
@@ -42,6 +46,7 @@ export default class MainComponent extends Component {
   }
   
   onPressGoBtn = ()=>{
+    const dayMap = {'sunday':1,'monday':2,'tuesday':9,'wednesday':5,'thursday':3,'friday':6,'saturday':8};
       
       if(this.state.name == ""){
         Alert.alert("Please enter your name");
@@ -57,35 +62,63 @@ export default class MainComponent extends Component {
           nameValArr.push(alphabetMatrix[name[i]]);
           nameSum += alphabetMatrix[name[i]];
         }
-        
-        //nameSum = Math.abs(nameSum % 9); // value 1
-        nameSum = this.addTillSingleDigit(nameSum);
+        nameSum = this.addTillSingleDigit(nameSum);// value 1
 
         var dob = this.state.dob;
         var dobArr = dob.split("-");
         var dd = dobArr[0];
         var mm = dobArr[1];
         var yy = dobArr[2];
-       
-
-        //var birthSum = Math.abs(dd % 9); // value 2
-        var birthSum = this.addTillSingleDigit(dd);
+        var birthSum = this.addTillSingleDigit(dd);// value 2
 
         var dobDigits = dob.replace(/-/g,'');
-        //Alert.alert("DOB: "+dd+" :"+mm+" :"+yy+" :"+dobDigits+" :"+nameValArr);
         var dobSum=0;
         for(var i=0;i<dobDigits.length;i++){
           dobSum += parseInt(dobDigits[i]);
         }
-        //Alert.alert("DOB: "+dd+" :"+mm+" :"+yy+" :"+dobDigits+" :"+dobSum);
-        //var destinySum = Math.abs(dobSum % 9); // value 4
-        var destinySum = this.addTillSingleDigit(dobSum);
+        var destinySum = this.addTillSingleDigit(dobSum);// value 4
+
+        
+        var tDate = Moment().format("DD-MM-YY");
+        tDate = tDate.split('-');
+        var tdd = parseInt(tDate[0]);
+        var tmm = parseInt(tDate[1]);
+        var tyy = parseInt(tDate[2]);
+        var dayName = Moment().format('dddd').toLowerCase();
+        var dayValue = dayMap[dayName]; // 3
+        var daySum = this.addTillSingleDigit(tdd+tmm+tyy+dayValue);// value 5
+
+        
+        var mDate = Moment().format("DD-MM-YYYY");
+        mDate = mDate.split('-');
+        var mdd = parseInt(dobArr[0]);
+        var mmm = parseInt(mDate[1]);
+        var myyyy = parseInt(mDate[2]);
+        var mdate = myyyy + " - " +  mmm + " - " +  mdd ;
+        var dt = Moment(mdate, "YYYY-MM-DD");
+        var mdayName = dt.format('dddd').toLowerCase();
+        var monthDayValue = dayMap[mdayName]; // 3
+        var monthSum = this.addTillSingleDigit(mdd+mmm+tyy+monthDayValue);// value 6
+
+        var dateVal = parseInt(dobArr[0]);
+        var monthVal = parseInt(dobArr[1]);
+        var yearVal = parseInt(tDate[2]);
+        var dob = yearVal + " - " +  monthVal + " - " +  dateVal ;
+        var dt = Moment(dob, "YYYY-MM-DD");
+        var dayName = dt.format('dddd').toLowerCase();
+        var dayValue = dayMap[dayName];       
+        var sum = dateVal+monthVal+yearVal+parseInt(dayValue);
+        var yrDasha = this.addTillSingleDigit(sum); // value 8
 
         var newData = [{
           "nameNum": nameSum,
           "birthNum": birthSum,               
           "cardinalNum": dd[0]+" | "+dd[1],
-          "destinyNum": destinySum
+          "destinyNum": destinySum,
+          "dayNumber": daySum,
+          "monthNumber":monthSum,
+          "mahaDasha":"",
+          "thisVarshFal":yrDasha
         }];
         
         this.setState(()=>{
@@ -114,7 +147,7 @@ export default class MainComponent extends Component {
         >
           <Text style={styles.welcome}>Welcome Astrologer !</Text>
           
-        <TextInput style={[styles.textInput,styles.textBorder,{paddingLeft:30,marginTop:30}]}
+        <TextInput style={[styles.textInput,styles.textBorder,{paddingLeft:30,marginTop:20}]}
             placeholder = 'Enter your Name'
             placeholderTextColor = '#fff'
             onChangeText = {
@@ -160,7 +193,7 @@ export default class MainComponent extends Component {
             </Button>
           </View>
           
-          <View style={styles.gridContainer}>
+          <View style={[styles.gridContainer]}>
 
             <FlatList 
                 data={this.state.flatListData}
@@ -176,7 +209,7 @@ export default class MainComponent extends Component {
             </FlatList>
 
           </View>
-          <View style={[styles.gridContainer,{flexDirection:'row',flex:0.15,marginTop:70}]}>
+          <View style={[styles.gridContainer,{flexDirection:'row',marginTop:30}]}>
                 <Button
                   containerStyle={styles.goBtn2}
                   style={{color:'#000'}}
@@ -203,7 +236,7 @@ export default class MainComponent extends Component {
                   Maha Dasha
                 </Button>
                 <Button
-                  containerStyle={[styles.goBtn2,{marginLeft:10}]}
+                  containerStyle={[styles.goBtn2,{marginLeft:15}]}
                   style={{color:'#000'}}
                   onPress={() => {
                     if(this.state.name == ""){
@@ -259,6 +292,19 @@ class FlatListItem extends Component {
                 <Text style={[styles.flatListItem]}>Destiny No.</Text>
                 <Text style={[styles.flatListItem]}>{this.props.item.destinyNum}</Text>
              </View>
+             <View style={styles.oddRow}>  
+                <Text style={[styles.flatListItem]}>Day No.</Text>
+                <Text style={[styles.flatListItem]}>{this.props.item.dayNumber}</Text>
+             </View>
+             <View style={styles.evenRow}>    
+                <Text style={[styles.flatListItem]}>Month No.</Text>
+                <Text style={[styles.flatListItem]}>{this.props.item.monthNumber}</Text>
+             </View>
+             <View style={styles.oddRow}>  
+                <Text style={[styles.flatListItem]}>This year Varsh Fal</Text>
+                <Text style={[styles.flatListItem]}>{this.props.item.thisVarshFal}</Text>
+             </View>
+             
         </View>
       );
   }

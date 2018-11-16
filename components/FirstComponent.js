@@ -11,7 +11,6 @@ export default class FirstComponent extends Component {
         super(props);
         this.state = {
             dashaListData : [],
-            yearlyDashaListData : [],
             dd:"",
             mm:"",
             yy:""
@@ -41,11 +40,7 @@ export default class FirstComponent extends Component {
             "year": "Years"
           }];
 
-          var newData2 = [{
-            "dasha": "M.D.",
-            "year": "Year wise Dasha"
-          }];
-
+        
         while (yy<futureYY){
             var obj = {
                 "dasha": ddSum,
@@ -57,15 +52,11 @@ export default class FirstComponent extends Component {
                 ddSum = 1;
               }
             newData.push(obj);
-            newData2.push(obj);
-            
-            
         }
         
         this.setState(()=>{
                 return{
                 dashaListData:newData,
-                yearlyDashaListData:newData2,
                 dd:params.dd,
                 mm:params.mm,
                 yy:params.yy
@@ -133,15 +124,12 @@ class FlatListItem extends Component {
                 var monthVal = this.props.parentStateData.mm;
                 var dateVal = this.props.parentStateData.dd;
                 var yearVal = i.toString().substring(2, 4); // 1
-
-                var datMonSum = this.addTillSingleDigit(parseInt(dateVal)+parseInt(monthVal)); // 2
                 var dob = yearVal + " - " +  monthVal + " - " +  dateVal ;
                 var dt = Moment(dob, "YYYY-MM-DD");
                 var dayName = dt.format('dddd').toLowerCase();
-               
                 var dayValue = dayMap[dayName]; // 3
                 //Alert.alert(dayName+" "+dayValue);
-                var sum = parseInt(yearVal)+parseInt(datMonSum)+parseInt(dayValue)
+                var sum = parseInt(yearVal)+parseInt(dateVal)+parseInt(monthVal)+parseInt(dayValue)
                 var yrDasha = this.addTillSingleDigit(sum);
                 if (i == yrsArr[1]-1){
                     yearlyDashaVal += i+'['+yrDasha+']';
