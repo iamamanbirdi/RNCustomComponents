@@ -37,7 +37,11 @@ const App = createStackNavigator({
     SecondScreen: {
         screen : SecondComponent,
         navigationOptions: {
-            headerTitle : 'Charts'
+            headerTitle : 'Charts',
+            headerStyle: {
+                backgroundColor: '#dee6f7',
+                color:'#000'
+            }
         }
     }
 });

@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     goBtn2:{
       backgroundColor:'#fff',
       borderRadius:5,
-      width:130,
+      width:150,
       padding:5
     },
     flatListItem: {
@@ -72,6 +72,9 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection:'row'    ,
     backgroundColor: '#dee6f7'
+  },
+  gridText:{
+    paddingTop:15,fontSize:18
   }
 
   });

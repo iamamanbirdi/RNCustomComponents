@@ -118,7 +118,7 @@ export default class SecondComponent extends Component {
 
     }
     getItemValue(val){
-        var dob = this.state.dob;
+        var dob = this.state.dob+""+this.state.destinyNum;
         var res = '';
         for(var i=0;i<dob.length;i++){
             if(dob[i] == val){
@@ -128,7 +128,7 @@ export default class SecondComponent extends Component {
         return res;
     }
     getTextValue(val){
-        var dob = this.state.dob+""+this.state.currYearVF+""+this.state.currYearMahaDasha;
+        var dob = this.state.dob+""+this.state.destinyNum+""+this.state.currYearVF+""+this.state.currYearMahaDasha;
         var res = '';
         for(var i=0;i<dob.length;i++){
             if(dob[i] == val){
@@ -164,154 +164,154 @@ export default class SecondComponent extends Component {
             // we will traverse vertically
             
             <View style={styles.container}>
-            
-            <View style={[styles.gridContainer,{marginTop:10,flex:0.5}]}>
+            <Text style={{textAlign:'center',fontSize:16,marginTop:5,fontWeight:'600'}}>Basic Chart</Text>
+            <View style={[styles.gridContainer,{marginTop:5,flex:0.5}]}>
             <Grid>
               <Col>
                 <Row
-                  style={{ backgroundColor: "cyan", justifyContent: "center" }}
+                  style={{ backgroundColor: "skyblue", justifyContent: "center" }}
                 >
-                  <Text>{item1}</Text>
+                  <Text style={styles.gridText} >{item1}</Text>
                 </Row>
                 <Row
-                  style={{ backgroundColor: "pink", justifyContent: "center" }}
+                  style={{ backgroundColor: "violet", justifyContent: "center" }}
                 >
-                  <Text>{item2}</Text>
+                  <Text style={styles.gridText} >{item2}</Text>
                 </Row>
                 <Row
                   style={{
-                    backgroundColor: "lightgreen",
+                    backgroundColor: "orange",
                     justifyContent: "center"
                   }}
                 >
-                  <Text>{item3}</Text>
+                  <Text style={styles.gridText} >{item3}</Text>
                 </Row>
               </Col>
               <Col>
                 <Row
-                  style={{ backgroundColor: "gray", justifyContent: "center" }}
+                  style={{ backgroundColor: "red", justifyContent: "center" }}
                 >
-                  <Text>{item4}</Text>
+                  <Text style={[styles.gridText,{color:'#fff'}]}>{item4}</Text>
                 </Row>
                 <Row
                   style={{
-                    backgroundColor: "lightblue",
+                    backgroundColor: "gray",
                     justifyContent: "center"
                   }}
                 >
-                  <Text>{item5}</Text>
+                  <Text style={[styles.gridText,{color:'#fff'}]} >{item5}</Text>
                 </Row>
+                <Row
+                  style={{
+                    backgroundColor: "indigo",
+                    justifyContent: "center"
+                  }}
+                >
+                  <Text style={[styles.gridText,{color:'#fff'}]}>{item6}</Text>
+                </Row>
+              </Col>
+              <Col>
                 <Row
                   style={{
                     backgroundColor: "yellow",
                     justifyContent: "center"
                   }}
                 >
-                  <Text>{item6}</Text>
-                </Row>
-              </Col>
-              <Col>
-                <Row
-                  style={{
-                    backgroundColor: "magenta",
-                    justifyContent: "center"
-                  }}
-                >
-                  <Text>{item7}</Text>
+                  <Text style={styles.gridText} >{item7}</Text>
                 </Row>
                 <Row
-                  style={{ backgroundColor: "cyan", justifyContent: "center" }}
+                  style={{ backgroundColor: "green", justifyContent: "center" }}
                 >
-                  <Text>{item8}</Text>
+                  <Text style={[styles.gridText,{color:'#fff'}]}>{item8}</Text>
                 </Row>
                 <Row
-                  style={{ backgroundColor: "pink", justifyContent: "center" }}
+                  style={{ backgroundColor: "black", justifyContent: "center" }}
                 >
-                  <Text>{item9}</Text>
+                  <Text style={[styles.gridText,{color:'#fff'}]}>{item9}</Text>
                 </Row>
               </Col>
             </Grid>
           </View>
 
-            <View style={[styles.gridContainer,{marginLeft:20,marginRight:20,marginTop:10,flex:0.2}]}>        
+            <View style={[styles.gridContainer,{marginLeft:40,marginRight:40,marginTop:10,flex:0.2}]}>        
                     <View style={[styles.oddRow]}>   
-                        <Text style={[styles.flatListItem]}>Year</Text>
-                        <Text style={[styles.flatListItem,{paddingTop:2}]}>Maha Dasha</Text>
-                        <Text style={[styles.flatListItem]}>Varsh Fal</Text>
-                        <Text style={[styles.flatListItem,{paddingTop:2}]}>Destiny Number</Text>
+                        <Text style={[styles.flatListItem,{textAlign:'center'}]}>Year</Text>
+                        <Text style={[styles.flatListItem,{textAlign:'center'}]}>Maha Dasha</Text>
+                        <Text style={[styles.flatListItem,{textAlign:'center'}]}>Varsh Fal</Text>
+                        
 
                     </View>
                     <View style={styles.evenRow}>   
-                        <Text style={[styles.flatListItem]}>{this.state.currYear}</Text>
-                        <Text style={[styles.flatListItem]}>{this.state.currYearMahaDasha}</Text>
-                        <Text style={[styles.flatListItem]}>{this.state.currYearVF}</Text>
-                        <Text style={[styles.flatListItem]}>{this.state.destinyNum}</Text>
+                        <Text style={[styles.flatListItem,{textAlign:'center'}]}>{this.state.currYear}</Text>
+                        <Text style={[styles.flatListItem,{textAlign:'center'}]}>{this.state.currYearMahaDasha}</Text>
+                        <Text style={[styles.flatListItem,{textAlign:'center'}]}>{this.state.currYearVF}</Text>
+                        
                     </View>
              </View>
-            
-          <View style={[styles.gridContainer,{marginTop:10,marginBottom:10,flex:0.5}]}>
+             <Text style={{textAlign:'center',fontSize:16,marginTop:5,fontWeight:'600'}}>Current Chart</Text>
+          <View style={[styles.gridContainer,{marginTop:5,marginBottom:10,flex:0.5}]}>
             <Grid>
               <Col>
                 <Row
-                  style={{ backgroundColor: "cyan", justifyContent: "center" }}
+                  style={{ backgroundColor: "skyblue", justifyContent: "center" }}
                 >
-                  <Text>{textVal1}</Text>
+                  <Text style={[styles.gridText]}>{textVal1}</Text>
                 </Row>
                 <Row
-                  style={{ backgroundColor: "pink", justifyContent: "center" }}
+                  style={{ backgroundColor: "violet", justifyContent: "center" }}
                 >
-                  <Text>{textVal2}</Text>
+                  <Text style={[styles.gridText]}>{textVal2}</Text>
                 </Row>
                 <Row
                   style={{
-                    backgroundColor: "lightgreen",
+                    backgroundColor: "orange",
                     justifyContent: "center"
                   }}
                 >
-                  <Text>{textVal3}</Text>
+                  <Text style={[styles.gridText]}>{textVal3}</Text>
                 </Row>
               </Col>
               <Col>
                 <Row
-                  style={{ backgroundColor: "gray", justifyContent: "center" }}
+                  style={{ backgroundColor: "red", justifyContent: "center" }}
                 >
-                  <Text>{textVal4}</Text>
+                  <Text style={[styles.gridText,{color:'#fff'}]} >{textVal4}</Text>
                 </Row>
                 <Row
                   style={{
-                    backgroundColor: "lightblue",
+                    backgroundColor: "gray",
                     justifyContent: "center"
                   }}
                 >
-                  <Text>{textVal5}</Text>
+                  <Text style={[styles.gridText,{color:'#fff'}]}>{textVal5}</Text>
                 </Row>
+                <Row
+                  style={{
+                    backgroundColor: "indigo",
+                    justifyContent: "center"
+                  }}
+                >
+                  <Text style={[styles.gridText,{color:'#fff'}]} >{textVal6}</Text>
+                </Row>
+              </Col>
+              <Col>
                 <Row
                   style={{
                     backgroundColor: "yellow",
                     justifyContent: "center"
                   }}
                 >
-                  <Text>{textVal6}</Text>
-                </Row>
-              </Col>
-              <Col>
-                <Row
-                  style={{
-                    backgroundColor: "magenta",
-                    justifyContent: "center"
-                  }}
-                >
-                  <Text>{textVal7}</Text>
+                  <Text style={[styles.gridText]}>{textVal7}</Text>
                 </Row>
                 <Row
-                  style={{ backgroundColor: "cyan", justifyContent: "center" }}
+                  style={{ backgroundColor: "green", justifyContent: "center" }}
                 >
-                  <Text>{textVal8}</Text>
+                  <Text style={[styles.gridText,{color:'#fff'}]} >{textVal8}</Text>
                 </Row>
                 <Row
-                  style={{ backgroundColor: "pink", justifyContent: "center" }}
+                  style={{ backgroundColor: "black", justifyContent: "center" }}
                 >
-                  <Text>{textVal9}</Text>
+                  <Text style={[styles.gridText,{color:'#fff'}]} >{textVal9}</Text>
                 </Row>
               </Col>
             </Grid>

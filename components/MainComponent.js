@@ -9,13 +9,15 @@ import Button from "react-native-button";
 import Moment from 'moment';
 import { FirstScreen, SecondScreen } from "./ScreenNames";
 let alphabetMatrix = {
-    'a' :1 , 'b' :2 , 'c' :3 , 'd' :4 , 'e' :5 , 'f' :6 , 'g' :7 , 'h' :8 , 'i' :9 , 'j' :1 , 'k' :2 , 'l' :3 , 'm' :4 , 'n' :5 , 'o' :6 , 'p' :7 , 'q' :8 , 'r' :9 , 's' :1 , 't' :2 , 'u' :3 , 'v' :4 , 'w' :5 , 'x' :6 , 'y' :7 , 'z' :8
+    'a' :1 , 'b' :2 , 'c' :3 , 'd' :4 , 'e' :5 , 'f' :8 , 'g' :3 , 'h' :5 ,
+    'i' :1 , 'j' :1 , 'k' :2 , 'l' :3 , 'm' :4 , 'n' :5 , 'o' :7 , 'p' :8 ,
+    'q' :1 , 'r' :2 , 's' :3 , 't' :4 , 'u' :6 , 'v' :6 , 'w' :6 , 'x' :5 , 'y' :1 , 'z' :7
 }
 export default class MainComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      dob: "14-12-1988",
+      dob: "",
       name:"",
       flatListData : [{
         "nameNum": "",
@@ -200,7 +202,7 @@ export default class MainComponent extends Component {
             </Button>
           </View>
           
-          <View style={[styles.gridContainer,{flex:0.9}]}>
+          <View style={[styles.gridContainer,{flex:0.85}]}>
 
             <FlatList 
                 data={this.state.flatListData}
@@ -216,7 +218,7 @@ export default class MainComponent extends Component {
             </FlatList>
 
           </View>
-          <View style={[styles.gridContainer,{flexDirection:'row',marginTop:30}]}>
+          <View style={[styles.gridContainer,{flexDirection:'row',marginTop:10,marginLeft:25,marginRight:20}]}>
                 <Button
                   containerStyle={styles.goBtn2}
                   style={{color:'#000'}}
@@ -240,7 +242,7 @@ export default class MainComponent extends Component {
                     }
                   }}
                   >
-                  Maha Dasha
+                  Maha Dasha & VF
                 </Button>
                 <Button
                   containerStyle={[styles.goBtn2,{marginLeft:15}]}
