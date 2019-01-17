@@ -17,7 +17,7 @@ export default class MainComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      dob: "",
+      dob: "10-10-1992",
       name:"",
       flatListData : [{
         "nameNum": "",
@@ -253,6 +253,7 @@ export default class MainComponent extends Component {
                     }else{
                       var dob = this.state.dob;
                       var dobArr = dob.split("-");
+                      Alert.alert("btn clkick "+dob);
                       var dd = dobArr[0];
                       var mm = dobArr[1];
                       var yy = dobArr[2];
@@ -260,7 +261,10 @@ export default class MainComponent extends Component {
                         dd:dd,
                         mm:mm,
                         yy:yy,
-                        destinyNum:this.state.flatListData[0].destinyNum
+                        destinyNum:this.state.flatListData[0].destinyNum,
+                        dayNumber:this.state.flatListData[0].dayNumber,
+                        monthNumber:this.state.flatListData[0].monthNumber,
+                        birthNum:this.state.flatListData[0].birthNum,
                       }
                       this.props.navigation.navigate(SecondScreen,dataToSend);
                     }

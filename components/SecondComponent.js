@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {styles} from './style';
 
-import {Text,TextInput,View,Keyboard,Alert,Image,ImageBackground,FlatList} from "react-native";
+import {ActionSheetIOS,Picker,Text,TextInput,View,Keyboard,Alert,Image,ImageBackground,FlatList} from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import Moment from 'moment';
 import Button from "react-native-button";
@@ -10,17 +10,26 @@ import Button from "react-native-button";
 export default class SecondComponent extends Component {
     constructor(props){
         super(props);
+        this.showActionSheet = this.showActionSheet.bind(this);
+        var mDate = Moment().format("DD-MM-YYYY");
+        mDate = mDate.split('-');
+        var currYr = mDate[2];
         this.state = {   
             dashaListData : [],           
             dd:"",
             mm:"",
             yy:"",
             dob:"",
-            currYear:"",
+            currYear:currYr,
             currYearMahaDasha:"",
             currYearVF:"",
-            destinyNum:""
+            destinyNum:"",
+            birthNum:"",
+            dayNumber:"",
+            monthNumber:"",
+            yearsPicker:[]
       }
+      
     }
     addTillSingleDigit = (num)=>{
         console.log("num = "+num);
@@ -35,11 +44,15 @@ export default class SecondComponent extends Component {
         }
         return num;
     }
+
     componentWillMount(){    
         let params = this.props.navigation.state.params;
-        this.setDashaData(params);
+        this.doAllCalculations(params);
+        
     }
-    setDashaData = (params) => {
+
+    doAllCalculations = (params) => {
+      //Alert.alert("in doAllCalculations ",this.state.currYear);
         var dd = params.dd;
         var ddSum = parseInt(this.addTillSingleDigit(dd));
         var yy = parseInt(params.yy);//1992
@@ -47,14 +60,50 @@ export default class SecondComponent extends Component {
         var newData = [];
 
         var currYrMahaDasha = '';
-        var mDate = Moment().format("DD-MM-YYYY");
-        mDate = mDate.split('-');
-        var currYr = mDate[2];
+       // var mDate = Moment().format("DD-MM-YYYY");
+       // mDate = mDate.split('-');
+        var currYr = this.state.currYear;
 
+        // finding current year dasha(vf)
+        var dateVal = parseInt(params.dd);
+        var monthVal = parseInt(params.mm);
+        var yearVal = currYr;
+        var yrVal = parseInt(yearVal.substring(2, 4));
+        var datebirth = yearVal + " - " +  monthVal + " - " +  dateVal ;
+        var personDate = Moment(datebirth,"YYYY-MM-DD");
+        var now = Moment();
+        //Alert.alert(now.format('DD-MM-YYYY') +" : "+ personDate.format('DD-MM-YYYY'));
+        if (now < personDate) {
+          yrVal = yrVal-1; // if his bday has been passed or not in the current year
+          yearVal = yearVal-1;
+        } 
+        var dateob = yrVal + " - " +  monthVal + " - " +  dateVal ;
+        var dt = Moment(dateob, "YYYY-MM-DD");
+        var dayName = dt.format('dddd').toLowerCase();
+        const dayMap = {'sunday':1,'monday':2,'tuesday':9,'wednesday':5,'thursday':3,'friday':6,'saturday':8,}
+        var dayValue = dayMap[dayName];       
+        var sum = dateVal+monthVal+yrVal+parseInt(dayValue);
+        var yrDasha = this.addTillSingleDigit(sum); // value 
+        this.setState(()=>{
+                return{
+                    currYearVF:yrDasha
+                }
+        });
+        // finding current year dasha(vf)
+
+
+        var pYears = [];
+        var sta = yy;
+        var end = futureYY;
+        while (sta<end){
+          pYears.push(sta.toString());
+          sta++;
+        }
+        //Alert.alert("yrVal "+yearVal);
         while (yy<futureYY){
             var yrs = '';
             for(var j=yy;j<yy+ddSum;j++){
-                if(j == currYr){
+                if(j == yearVal){
                     currYrMahaDasha=ddSum;
                 }
                 if (j == yy+ddSum-1){
@@ -73,9 +122,11 @@ export default class SecondComponent extends Component {
                 ddSum = 1;
               }
             newData.push(obj);
+            
         }
-        
+
         var dob = params.dd+""+params.mm+""+params.yy.substring(2, 4);
+        Alert.alert("In doAllCalculations = "+params.dd+" "+params.mm+" "+params.yy);
         dob = dob.replace(/0/g,'');
         this.setState(()=>{
                 return{
@@ -86,39 +137,21 @@ export default class SecondComponent extends Component {
                     dob:dob,
                     currYear:currYr,
                     currYearMahaDasha:currYrMahaDasha,
-                    destinyNum:params.destinyNum
-                }
-        });
+                    destinyNum:params.destinyNum,
+                    birthNum:params.birthNum,
+                    dayNumber:params.dayNumber,
+                    monthNumber:params.monthNumber,
+                    yearsPicker:pYears
 
-        // finding current year dasha(vf)
-        var dateVal = parseInt(params.dd);
-        var monthVal = parseInt(params.mm);
-        var yearVal = currYr;
-        var yrVal = parseInt(yearVal.substring(2, 4));
-        var datebirth = yearVal + " - " +  monthVal + " - " +  dateVal ;
-        var personDate = Moment(datebirth,"YYYY-MM-DD");
-        var now = Moment();
-        //Alert.alert(now.format('DD-MM-YYYY') +" : "+ personDate.format('DD-MM-YYYY'));
-        if (now < personDate) {
-           yrVal = yrVal-1; // if his bday has been passed or not in the current year
-        } 
-        var dateob = yrVal + " - " +  monthVal + " - " +  dateVal ;
-        var dt = Moment(dateob, "YYYY-MM-DD");
-        var dayName = dt.format('dddd').toLowerCase();
-        const dayMap = {'sunday':1,'monday':2,'tuesday':9,'wednesday':5,'thursday':3,'friday':6,'saturday':8,}
-        var dayValue = dayMap[dayName];       
-        var sum = dateVal+monthVal+yrVal+parseInt(dayValue);
-        var yrDasha = this.addTillSingleDigit(sum); // value 
-        this.setState(()=>{
-                return{
-                    currYearVF:yrDasha
                 }
         });
-        
 
     }
+    // end of function
+
+
     getItemValue(val){
-        var dob = this.state.dob+""+this.state.destinyNum;
+        var dob = this.state.dob+""+this.state.destinyNum+""+this.state.birthNum;
         var res = '';
         for(var i=0;i<dob.length;i++){
             if(dob[i] == val){
@@ -128,7 +161,7 @@ export default class SecondComponent extends Component {
         return res;
     }
     getTextValue(val){
-        var dob = this.state.dob+""+this.state.destinyNum+""+this.state.currYearVF+""+this.state.currYearMahaDasha;
+        var dob = this.state.dob+""+this.state.destinyNum+""+this.state.birthNum+""+this.state.currYearVF+""+this.state.currYearMahaDasha;
         var res = '';
         for(var i=0;i<dob.length;i++){
             if(dob[i] == val){
@@ -137,9 +170,39 @@ export default class SecondComponent extends Component {
         }
         return res;
     }
-    
+   
+    showActionSheet(params) {
+      //Alert.alert(params);
+      //let params = this.props.navigation.state.params;
+        var sta = parseInt(params.yy);//1992
+        var end = sta+101; // 2092
+        var pYears = ['Cancel'];
+        while (sta<end){
+          pYears.push(sta.toString());
+          sta++;
+        }
+      ActionSheetIOS.showActionSheetWithOptions({
+        options: pYears,
+  
+        cancelButtonIndex: 0,
+          title:'Select Year'
+        },
+        (i) => {
+          if(i>0){
+          //Alert.alert(pYears[i]);
+          this.setState({ currYear:pYears[i] },
+            () => {
+              //Alert.alert(this.state.currYear);
+              //let params = this.props.navigation.state.params;
+              this.doAllCalculations(params);
+            });
+          }
+        });
+      }
     render() {
-        
+     // Alert.alert("In Render");
+        // item for basic chart
+        Alert.alert("In Render "+this.state.dob+" "+this.state.destinyNum+" "+this.state.birthNum);
         var item1 = this.getItemValue('3');
         var item2 = this.getItemValue('6');
         var item3 = this.getItemValue('2');
@@ -149,7 +212,7 @@ export default class SecondComponent extends Component {
         var item7 = this.getItemValue('9');
         var item8 = this.getItemValue('5');
         var item9 = this.getItemValue('4');
-
+      // textVal for current chart
         var textVal1 = this.getTextValue('3');
         var textVal2 = this.getTextValue('6');
         var textVal3 = this.getTextValue('2');
@@ -159,6 +222,10 @@ export default class SecondComponent extends Component {
         var textVal7 = this.getTextValue('9');
         var textVal8 = this.getTextValue('5');
         var textVal9 = this.getTextValue('4');
+
+        let serviceItems = this.state.yearsPicker.map( (s, i) => {
+            return <Picker.Item key={i} value={s} label={s} />
+        });
 
         return(
             // we will traverse vertically
@@ -233,21 +300,50 @@ export default class SecondComponent extends Component {
             </Grid>
           </View>
 
-            <View style={[styles.gridContainer,{marginLeft:40,marginRight:40,marginTop:10,flex:0.2}]}>        
+            <View style={[styles.gridContainer,{marginLeft:20,marginRight:20,marginTop:10,flex:0.2}]}>        
                     <View style={[styles.oddRow]}>   
-                        <Text style={[styles.flatListItem,{textAlign:'center'}]}>Year</Text>
-                        <Text style={[styles.flatListItem,{textAlign:'center'}]}>Maha Dasha</Text>
-                        <Text style={[styles.flatListItem,{textAlign:'center'}]}>Varsh Fal</Text>
-                        
-
+                        <Text onPress={() => this.showActionSheet(this.props.navigation.state.params)} style={[styles.flatListItem,{textAlign:'center'}]}>Year</Text>
+                        <Text style={[styles.flatListItem,{textAlign:'center'}]}>M.D.</Text>
+                        <Text style={[styles.flatListItem,{textAlign:'center'}]}>V.F.</Text>
                     </View>
                     <View style={styles.evenRow}>   
                         <Text style={[styles.flatListItem,{textAlign:'center'}]}>{this.state.currYear}</Text>
+                        {/*
+                        <Picker
+                          selectedValue={this.state.currYear}
+                          style={{ height: 50, width: 120 }}
+                          onValueChange={
+                            (itemValue, itemIndex) => {
+                              this.setState({ currYear:itemValue },
+                                () => {
+                                  //Alert.alert(this.state.currYear);
+                                  let params = this.props.navigation.state.params;
+                                  this.doAllCalculations(params);
+                                });
+                            }
+                          }>
+                           {serviceItems}
+                        </Picker>
+                        */}
+                        
+
                         <Text style={[styles.flatListItem,{textAlign:'center'}]}>{this.state.currYearMahaDasha}</Text>
                         <Text style={[styles.flatListItem,{textAlign:'center'}]}>{this.state.currYearVF}</Text>
-                        
                     </View>
              </View>
+
+             <View style={[styles.gridContainer,{marginLeft:20,marginRight:20,marginTop:10,flex:0.2}]}>        
+                    <View style={[styles.oddRow]}>   
+                       <Text style={[styles.flatListItem,{textAlign:'center'}]}>Day Number</Text>
+                        <Text style={[styles.flatListItem,{textAlign:'center'}]}>Month Number</Text>
+                    </View>
+                    <View style={styles.evenRow}>   
+                        <Text style={[styles.flatListItem,{textAlign:'center'}]}>{this.state.dayNumber}</Text>
+                        <Text style={[styles.flatListItem,{textAlign:'center'}]}>{this.state.monthNumber}</Text>
+                    </View>
+             </View>
+
+
              <Text style={{textAlign:'center',fontSize:16,marginTop:5,fontWeight:'600'}}>Current Chart</Text>
           <View style={[styles.gridContainer,{marginTop:5,marginBottom:10,flex:0.5}]}>
             <Grid>
