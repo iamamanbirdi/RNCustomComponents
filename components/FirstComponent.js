@@ -5,6 +5,7 @@ import Moment from 'moment';
 import {Text,ScrollView,View,FlatList,Dimensions,Alert} from 'react-native';
 import Button from 'react-native-button';
 
+// comments to test git
 
 export default class FirstComponent extends Component {
     constructor(props){
